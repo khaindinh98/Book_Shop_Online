@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head">
+</head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+
+
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<nav  th:replace="admin/LayoutManage :: slidebar">
+				</nav>
+				<div class="table-responsive">
+					<nav class="navbar">
+						<h5>List of User</h5>
+						<form class="form-inline">
+							<input id="searchTxt" class="form-control mr-sm-2" type="search"
+								placeholder="Search" aria-label="Search">
+							<button id="clsBtn" class="btn btn-outline-success my-2 my-sm-0"
+								type="button">Clear</button>
+						</form>
+						<a th:href = "@{/admin/users/adduser/}" 
+							type="submit"><button class="btn btn-danger my-2 my-sm-0">New User</button></a>
+					</nav>
+					<table class="table table-bordered table-hover" id="tbData">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Email</th>
+								<th>Full Name</th>
+								<th>Username</th>
+								<th>Phone</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+ 							<tr th:each="user: ${users}">
+								<td class="align-middle" scope="row" th:text="${user.id}"></td>
+								
+								
+								<!-- <td class="align-middle">
+									<th:block th:each="user,iterStat: ${product.authors}">
+									<span th:text="${iterStat.count == 1}? ${author.name} : ', '+${author.name}"></span>
+									</th:block>
+								</td> -->
+								
+								<td class="align-middle" th:text="${user.email}" ></td>
+								<td class="align-middle" th:text="${user.fullName}"></td>
+								<td class="align-middle" th:text="${user.username}"></td>
+								<td class="align-middle" th:text="${user.phone}"></td>
+							
+								<td class="align-middle" >
+									<th:block>
+										<a th:href="@{/admin/users/edituser/{id}(id=${user.id})}" class="mr-sm-2 text-primary"><i
+											class="fa fa-pencil"></i></a>
+										<!-- <a th:href="@{/admin/product/unactivated/{id}(id=${product.id})}" class="text-danger"><i
+											class="fa fa-trash"></i></a> -->
+									</th:block>
+									
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--       	        </th:block> -->
+			</main>
+		</div>
+	</div>
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+	<script th:src="@{/js/manage_products.js}"></script>
+</body>
+</html>

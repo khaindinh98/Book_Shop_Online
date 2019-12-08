@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head">
+</head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<nav th:replace="admin/LayoutManage :: slidebar"></nav>
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<div
+					class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+					<h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+				</div>
+				<div class="row">
+
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-primary shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div
+											class="text-xs font-weight-bold text-primary text-uppercase mb-1" id="nameEarnings">Earnings
+											(This Date)</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800" id="earnings">0</div>
+									</div>
+									<div class="col-auto">
+										<i class="fa fa-dollar-sign fa-2x text-primary"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-success shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div
+											class="text-xs font-weight-bold text-success text-uppercase mb-1">Total
+											Of Items Bought</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800"
+											id="totalOfItemBought">0</div>
+									</div>
+									<div class="col-auto">
+										<i class="fas fa-file-invoice-dollar text-success fa-2x"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-info shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div
+											class="text-xs font-weight-bold text-warning text-uppercase mb-1">Total
+											Of Items Sold</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800"
+											id="totalOfItemSold">0</div>
+									</div>
+									<div class="col-auto">
+										<i class="fa fa-shopping-cart fa-2x text-warning"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-success shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div
+											class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Of Products Bought</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800" id="totalOfProductBought">0</div>
+									</div>
+									<div class="col-auto">
+										<i class="fas fa-file-invoice-dollar text-info fa-2x"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Earnings (Monthly) Card Example -->
+					<div class="col-xl-3 col-md-6 mb-4">
+						<div class="card border-left-info shadow h-100 py-2">
+							<div class="card-body">
+								<div class="row no-gutters align-items-center">
+									<div class="col mr-2">
+										<div
+											class="text-xs font-weight-bold text-danger text-uppercase mb-1">Total Of Products Sold</div>
+										<div class="h5 mb-0 font-weight-bold text-gray-800" id="totalOfProductSold">0</div>
+									</div>
+									<div class="col-auto">
+										<i class="fa fa-shopping-cart fa-2x text-danger"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+				<div class="row justify-content-center">
+					<canvas class="col-8" id="myChart" width="800" height="400"></canvas>
+				</div>
+			</main>
+		</div>
+
+		<!-- Bootstrap core JavaScript
+					    ================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+<!-- 		<script>
+					window.jQuery
+							|| document
+									.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+				</script>
+		<script src="../../../../assets/js/vendor/popper.min.js"></script>
+		<script src="../../../../dist/js/bootstrap.min.js"></script> -->
+
+		<!-- Icons -->
+		<script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+		<script>
+					feather.replace()
+				</script>
+
+		<!-- Graphs -->
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+		</main>
+	</div>
+	</div>
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+	<script th:src="@{/js/index.js}"></script>
+</body>
+</html>

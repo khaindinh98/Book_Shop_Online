@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<main class="mt-5 pt-4">
+	<div class="container">
+		
+			<div class="row mt-5">
+			<div class="table-responsive">
+			<table class="table table-bordered table-hover text-center mt-4">
+				<thead class="thead-dark">
+					<tr>
+						<th>#</th>
+						<th>Image</th>
+						<th>Name</th>
+						<th>Unit Price</th>
+						<th>Count</th>
+						<th>Delete</th>
+					</tr>
+				</thead>
+				<tbody class="tableBody">
+					<tr th:each="i, state: ${list}">
+						<td class="align-middle" th:utext="${state.count}"></td>
+						<td class="align-middle"><img style="width: 150px; height: 200px;" th:src="${i.images}"> </td>
+						<td class="align-middle" th:utext="${i.name}"></td>
+						<td class="align-middle" th:utext="${#numbers.formatCurrency(i.priceSell)}"></td>
+						<td class="align-middle" style="width: 200px;">
+						<!-- 	<div class="input-group text-center">
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-danger btn-number btnD"
+										data-type="minus" data-field="quant[2]">
+										<span class="">-</span>
+										<input type="hidden" class="idCartt" th:value="${i.idCart}">
+										<input type="hidden" class="idBookk" th:value="${i.idBook}">
+									</button> -->
+<!-- 
+								<input type="text" name="quant[2]"
+									class="form-control quantityy" th:value="${i.number}" min="1" max="100" readonly>
+								
+									<button type="button" class="btn btn-success btn-number btnD"
+										data-type="plus" data-field="quant[2]">
+										<span class="">+</span>
+										<input type="hidden" class="idCartt" th:value="${i.idCart}">
+										<input type="hidden" class="idBookk" th:value="${i.idBook}">
+									</button> -->
+									<div class="quantity" style="width: 100%;">
+										<button class="plus-btnn btnD" type="button" name="button">
+											<input type="hidden" class="idCartt" th:value="${i.idCart}">
+											<input type="hidden" class="idBookk" th:value="${i.idBook}">
+											<span>+</span>
+										</button>
+										
+										<input type="text" name="name" class="quantityy text-center" min="1" readonly th:value="${i.number}">
+										<button class="minus-btnn btnD" type="button" name="button">
+											<span>-</span>
+											<input type="hidden" class="idCartt" th:value="${i.idCart}">
+											<input type="hidden" class="idBookk" th:value="${i.idBook}">
+										</button>
+									</div>
+						</td>
+						<td style="font-size: 30px" class="align-middle">
+							
+							<button class="btn btn-danger text-white btn-delete"> <i class="fa fa-trash"></i>
+							<input type="hidden" class="idCartt" th:value="${i.idCart}">
+							<input type="hidden" class="idBookk" th:value="${i.idBook}">
+							</button>
+						</td>
+						
+					</tr>
+				</tbody>
+			</table>
+				<div class="col-12 btnOrder">
+					<a th:href="@{'/order/' + ${idCarttt}}" class=""><button class="col-12 btn btn-success"> Order </button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+	
+	    <!-- <script type="text/javascript">
+      $('.minus-btnn').on('click', function(e) {
+    		e.preventDefault();
+    		var $this = $(this);
+    		var $input = $this.closest('div').find('.quantityy');
+    		var value = parseInt($input.val());
+
+    		if (value > 1) {
+    			value = value - 1;
+    		} else {
+    			value = 0;
+    		}
+
+        $input.val(value);
+
+    	});
+
+    	$('.plus-btnn').on('click', function(e) {
+    		e.preventDefault();
+    		var $this = $(this);
+    		var $input = $this.closest('div').find('.quantityy');
+    		var value = parseInt($input.val());
+
+    		if (value < 100) {
+      		value = value + 1;
+    		} else {
+    			value =100;
+    		}
+
+    		$input.val(value);
+    	});
+
+      $('.like-btn').on('click', function() {
+        $(this).toggleClass('is-active');
+      });
+    </script> -->
+</body>
+</html>

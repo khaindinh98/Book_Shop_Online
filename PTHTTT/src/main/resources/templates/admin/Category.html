@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head"></head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<nav th:replace="admin/LayoutManage :: slidebar"></nav>
+				<div class="row justify-content-center">
+				
+					<div class="col-6">
+						<nav class="navbar">
+							<h5 th:value="${title}">Add New Author</h5>
+						</nav>
+						<form action="#" th:action="@{/admin/category/save/}" th:object="${category}"  method="post" novalidate="novalidate" enctype="multipart/form-data">
+							<input type="hidden" th:field="*{id}">
+							<div class="form-group">
+								<label for="Category">Title</label>
+								<input type="text" th:field="*{title}" 
+										class="form-control" id="inputTitle" placeholder="Title Category">
+							</div>
+							<div class="form-group">
+								<label for="inputImage">Images Product </label>
+								<input type="file" th:field="*{fileData}"  name="inputImage"
+									class="form-control-file" id="inputImage">
+							</div>
+							<div class="form-group">
+								<label for="inputDetails">Description</label>
+								<textarea th:field="*{description}" class="form-control" id="inputDetails">
+								</textarea>
+							</div>
+							<button type="submit" class="btn btn-primary">Save</button>
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head">
+</head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+
+
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<nav  th:replace="admin/LayoutManage :: slidebar">
+				</nav>
+				<!--       			<th:block th:if="${#lists.isEmpty(produsts)}">
+      	            <h5>No Products</h5>
+      	        </th:block> -->
+
+				<!--       	        <th:block th:unless="${#lists.isEmpty(produsts)}"> -->
+				<div class="table-responsive">
+					<nav class="navbar">
+						<h5>List of books</h5>
+						<form class="form-inline">
+							<input id="searchTxt" class="form-control mr-sm-2" type="search"
+								placeholder="Search" aria-label="Search">
+							<button id="clsBtn" class="btn btn-outline-success my-2 my-sm-0"
+								type="button">Clear</button>
+						</form>
+						<a th:href = "@{/admin/products/addproduct/}" 
+							type="submit"><button class="btn btn-danger my-2 my-sm-0">New Product</button></a>
+					</nav>
+					<table class="table table-bordered table-hover" id="tbData">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Image</th>
+								<th>Book Name</th>
+								<th>Authors</th>
+								<th>Category</th>
+								<th>Size</th>
+								<th>Pages</th>
+								<th>Price Buy</th>
+								<th>Price Sell</th>
+								<th>Quantity</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+ 							<tr th:each="product: ${products}">
+								<td class="align-middle" scope="row" th:text="${product.id}"></td>
+								<td class="align-middle"  style="width:10rem;">
+									<img class="w-100" th:src="${product.pathImages}">
+								</td>
+								<td class="align-middle"  th:text="${product.name}"></td>
+								<td class="align-middle">
+									<th:block th:each="author,iterStat: ${product.authors}">
+									<span th:text="${iterStat.count == 1}? ${author.name} : ', '+${author.name}"></span>
+									</th:block>
+								</td>
+								<td class="align-middle"  th:text="${product.category != null}? ${product.category.title}:''"></td>
+								<td class="align-middle"  th:text="${product.size}"></td>
+								<td class="align-middle"  th:text="${product.pages}"></td>
+								<td class="align-middle"  th:text="${product.priceBuy}"></td>
+								<td class="align-middle"  th:text="${product.priceSell}"></td>
+								<td class="align-middle"  th:text="${product.quantity}"></td>
+								<td class="align-middle" >
+									<th:block th:if="${product.status == 'activated'}">
+										<a th:href="@{/admin/products/editproduct/{id}(id=${product.id})}" class="mr-sm-2 text-primary"><i
+											class="fa fa-pencil"></i></a>
+										<a th:href="@{/admin/product/unactivated/{id}(id=${product.id})}" class="text-danger"><i
+											class="fa fa-trash"></i></a>
+									</th:block>
+									<th:block th:if="${product.status == 'unactivated'}">
+										<a style="font-size:x-large;" th:href="@{/admin/product/activated/{id}(id=${product.id})}" class="text-success"><i class="fa fa-play"></i></a>
+									</th:block>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--       	        </th:block> -->
+			</main>
+		</div>
+	</div>
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+	<script th:src="@{/js/manage_products.js}"></script>
+</body>
+</html>

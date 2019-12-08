@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head"></head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+
+
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<nav  th:replace="admin/LayoutManage :: slidebar">
+				</nav>
+				<!--       			<th:block th:if="${#lists.isEmpty(produsts)}">
+      	            <h5>No Products</h5>
+      	        </th:block> -->
+
+				<!--       	        <th:block th:unless="${#lists.isEmpty(produsts)}"> -->
+				<div class="table-responsive">
+
+					<nav class="navbar">
+						<h5>List of Order</h5>
+						<form class="form-inline">
+							<input id="searchTxt" class="form-control mr-sm-2" type="search"
+								placeholder="Search" aria-label="Search">
+							<button id="clsBtn" class="btn btn-outline-success my-2 my-sm-0"
+								type="button">Clear</button>
+						</form>
+						<a th:href = "@{/admin/orders/addorder/}" 
+							type="submit"><button class="btn btn-danger my-2 my-sm-0">New Order</button></a>
+					</nav>
+					<table class="table table-bordered table-hover" id="tbData">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Username</th>
+								<th>Date Order</th>
+								<th>Total Order</th>
+								<th>Status Order</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+ 							<tr th:each="order,iterStat: ${orders}">
+								<th scope="row" th:text="${iterStat.count}"></th>
+								<td th:text="${order.user.username}"></td>
+								<td th:text="${order.dateOrder}"></td>
+								<td th:text="${order.totalPrice}"></td>
+								<td th:text="${order.statusOrder}"></td>
+								<td><a th:href="@{/admin/orders/detailorder/{id}(id=${order.id})}" class="mr-sm-2 text-primary"><i
+										class="fa fa-pencil">Detail Order</i>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--       	        </th:block> -->
+			</main>
+		</div>
+	</div>
+
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+	<script th:src="@{/js/manage_orders.js}"></script>
+</body>
+</html>

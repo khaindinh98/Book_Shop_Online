@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head"></head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<nav th:replace="admin/LayoutManage :: slidebar"></nav>
+				<div class="row justify-content-center">
+
+					<div class="col-6">
+						<nav class="navbar">
+							<h5 th:value="${title}">Add New Invoice</h5>
+						</nav>
+						<form action="#" th:action="@{${url}}"
+							th:object="${invoiceForm}" method="post" novalidate="novalidate">
+							<input type="hidden" th:field="*{id}">
+							<div class="form-row">
+								<div class="form-group col-md-5">
+									<label for="inputUsername">Username</label> <input type="text"
+										th:field="*{username}" class="form-control" id="inputUsername"
+										placeholder="Name Author" readonly>
+								</div>
+								<div class="form-group col-md-7">
+									<label for="inputFullName">Full Name</label> <input type="text"
+										th:field="*{fullName}" class="form-control" id="inputFullName"
+										placeholder="Name Author" readonly>
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-7">
+									<label for="inputDateModified">Date Modified</label> <input
+										type="text" th:field="*{dateModified}" class="form-control"
+										id="inputDateModified" placeholder="Date Invoice" readonly>
+								</div>
+								<div class="form-group col-md-5">
+									<label for="inputTotalPrice">Total Price</label> <input
+										type="number" th:field="*{totalPrice}" class="form-control"
+										id="inputTotalPrice" placeholder="Total Price" readonly>
+								</div>
+							</div>
+							<!-- Button trigger modal -->
+							<button type="button" class="btn btn-primary" data-toggle="modal"
+								data-target="#exampleModal">Add Product</button>
+							<div class="table-responsive">
+								<table class="table table-bordered table-hover text-center mt-4" id="tbDetailInvoices">
+									<thead class="thead-dark">
+										<tr>
+											<th>#</th>
+											<th>Image</th>
+											<th>Name Book</th>
+											<th>Price Buy</th>
+											<th>Quantity</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="detailInvoiceForm, iterStat: *{detailInvoiceForms}" th:id="'detailInvoiceId'+${iterStat.index}">
+											<td><span th:text="${iterStat.count}"></span><input class='form-control' type="hidden" th:field="*{detailInvoiceForms[__${iterStat.index}__].bookId}"/></td>
+											<td style="width: 5rem;"><img class="w-100" th:id="'imageDetailInvoiceForms'+${iterStat.index}" th:src="${detailInvoiceForm.pathImage}">
+											</td>
+											<td><input class='form-control' type="text" th:field="*{detailInvoiceForms[__${iterStat.index}__].bookName}" readonly></td>
+											<td><input class='form-control' type="number" th:field="*{detailInvoiceForms[__${iterStat.index}__].priceBuy}" readonly></td>
+											<td><input class='form-control inputQuantity' type="number" th:field="*{detailInvoiceForms[__${iterStat.index}__].quantity}"></td>
+											<td><button class="btn btn-danger" type="button" th:onclick="'deleteInInvoice('+${iterStat.index}+')'"><i class="fa fa-trash"></i></button></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<button type="submit" class="btn btn-primary">Save</button>
+							</form>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body table-responsive">
+					<form class="form-inline">
+						<input id="searchTxt" class="form-control mr-sm-2" type="search"
+							placeholder="Search" aria-label="Search">
+						<button id="clsBtn" class="btn btn-outline-success my-2 my-sm-0"
+							type="button">Clear</button>
+					</form>
+					<table class="table table-bordered table-hover text-center mt-4" id="tbData">
+						<thead class="thead-dark">
+							<tr>
+								<th>#</th>
+								<th>Image</th>
+								<th>Name Book</th>
+								<th>Price Buy</th>
+								<th>Quantity</th>
+								<th>Additional</th>
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:if="${#arrays.length(books) != 0}">
+							<tr th:each="book, iterStat: ${books}" th:id="'bookId' + ${book.id}">
+								<td th:utext="${iterStat.count}"></td>
+								<td style="width: 5rem;"><img class="w-100"
+									th:src="${book.pathImages}" th:id="'pathImageBookId' + ${book.id}">
+								</td>
+								<td th:utext="${book.name}" th:id="'bookNameBookId' + ${book.id}"></td>
+								<td><input class="form-control inputPrice" th:value="${book.priceBuy}" type="number" th:id="'priceBuyBookId' + ${book.id}"/></td>
+								<td><input class="form-control inputQuantity" value="0" type="number" th:id="'quantityBookId' + ${book.id}"/></td>
+								<td><button th:onclick="'addToInvoice('+${book.id}+')'" class="btn btn-primary">Add</button></td>
+							</tr>
+							</th:block>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+	<script th:src="@{/js/general.js}"></script>
+	<script th:src="@{/js/invoice.js}"></script>
+</body>
+</html>

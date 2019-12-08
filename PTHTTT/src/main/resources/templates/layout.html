@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
+<head th:fragment="head">
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Book Online</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script th:src="@{/js/script.js}"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link href="../static/images/logo.png" th:href="@{/images/logo.png}"
+	rel="shortcut icon" />
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous" />
+<link
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+	rel="stylesheet"
+	integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+	crossorigin="anonymous" />
+<link href='https://fonts.googleapis.com/css?family=Roboto'
+	rel='stylesheet'>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+
+</head>
+<body>
+	<!-- <nav th:fragment="header" -->
+	<nav th:fragment="header" class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand text-white" th:href="@{/}"> PiBook </a>
+		<button class="navbar-toggler navbar-toggler-right" type="button"
+			data-toggle="collapse" data-target="#navb">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navb">
+			<ul class="navbar-nav mr-auto mx-lg-15">
+				<li class="nav-item dropdown" th:each="category, state: ${listCategory}"><a
+					class="nav-link" href="#" th:href="@{/category/{id}(id=${category.id})}" id="navbardrop"
+					 th:text="${category.title}"></a>
+				</li>
+				<!-- <li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbardrop"
+					data-toggle="dropdown"> Kinh Tế </a>
+				</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href="#" id="navbardrop"
+					data-toggle="dropdown"> Đời Sống </a>
+				</li> -->
+				
+				<li class="nav-item dropdown"><a
+					class="nav-link text-primary" th:href="@{'/managerOrder/' + ${idCart}}" id="navbardrop">Đơn Hàng</a>
+				</li>
+			</ul>
+			<input type="hidden" th:value="${idCart}" class="idCart" id="idCart">
+			<ul class="navbar-nav cartItem">
+				<li class="nav-item text-white">
+					<div class="dropdown itemss">
+						<button class="btn btn-dark dropdown-toggle dropCart"
+							data-toggle="dropdown">
+							<i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i> <span
+								class="text-danger countCart" th:text="${countCart}"></span>
+								
+						</button>
+						<!-- <ul class="dropdown-menu dropdown-cart addItems" role="menu">
+					
+						</ul> -->
+					</div>
+				</li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0 mx-lg-4" action="/book/search">
+				<input class="form-control mr-sm-2 my-2" name="name" type="text"
+					placeholder="Search">
+				<button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+
+			</form>
+			<a th:href="@{/login}"><button sec:authorize="!isAuthenticated()"
+					class="btn btn-primary my-2 my-sm-0 text-white">Login</button></a>
+
+			<li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false" sec:authentication="name"> </a> <!-- <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b> -->
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<div class="dropdown-divider"></div>
+					<a class="pl-3" th:href="@{/logout}">Logout</a>
+				</div>
+			</li>
+
+		</div>
+	</nav>
+	<footer th:fragment="footer" class="container text-center mt-4">
+		<strong>&copy; Duc Nguyen & Khai Nguyen</strong>
+	</footer>
+
+</body>
+</html>

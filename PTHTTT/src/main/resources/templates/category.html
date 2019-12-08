@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<main class="mt-5 pt-4">
+	<div class="container">
+		<div class="row">
+		
+			<div class="col-12 mt-4">
+				<hr style="border: 1px solid brown; width: 100%">
+				<p style="font-size: 25px; color: darkred; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" th:text="${categoryName}"></p>
+			</div>
+			<div class="book-list__item col-lg-3 col-md-6 col-sm-6 col-xs-12 mt-5"
+			th:each="book: ${listBook}"> <a href="#"
+				th:href="@{/book/{id}(id=${book.id})}" class="view-book"></a>
+			<div class="item__wrap">
+				<a href="#" th:href="@{/book/{id}(id=${book.id})}" class="view-book"></a>
+				<div class="item__head">
+					<a href="#" class="view-book"> <!-- <div class="item__hot">Hot</div> -->
+						<div class="item__img">
+							<a href="#" th:href="@{/book/{id}(id=${book.id})}"><img
+								th:src="${book.pathImages}"></a>
+						</div>
+					</a>
+					<div class="item__action">
+						<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+							class="view-book"> </a>
+						<div class="item__buy">
+							<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+								class="view-book"></a> <a href="#"
+								th:href="@{/book/{id}(id=${book.id})}" class="btn-add-to-cart"
+								data-url="/add-to-card/118" data-type="1"> Add to Cart
+								<i class="fa fa-shopping-cart"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+				<div class="item__body">
+					<h3 class="item__title">
+						<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+							class="view-book" th:text="${book.name}"></a>
+						<p class="view-book text-primary mt-2"
+							th:text="${#numbers.formatCurrency(book.priceSell)}">
+						</p>
+					</h3>
+				</div>
+
+			</div>
+		</div>
+	</div>
+	</div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

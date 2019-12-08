@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/LayoutManage :: head"></head>
+
+<body>
+	<nav th:replace="admin/LayoutManage :: header"></nav>
+	<div class="container-fluid">
+		<div class="row">
+			<main class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+				<nav th:replace="admin/LayoutManage :: slidebar"></nav>
+				<div class="row justify-content-center">
+				
+					<div class="col-6">
+						<nav class="navbar">
+							<h5 th:text="${title}">Add New Product</h5>
+						</nav>
+						<form action="#" th:action="@{${url}}" th:object="${bookForm}"  method="post" novalidate="novalidate" enctype="multipart/form-data">
+							<input type="hidden" th:field="*{id}">
+							<div class="form-group">
+								<label for="inputName">Name Product</label>
+								<input type="text" th:field="*{name}" 
+										class="form-control" id="inputName" placeholder="Name Product">
+							</div>
+							<div class="form-group">
+								<label for="inputDescription">Description</label>
+								<textarea th:field="*{description}" class="form-control" id="inputDescription">
+								</textarea>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputSize">Size</label> 
+									<input type="text" th:field="*{size}" 
+										class="form-control" id="inputSize" placeholder="Size">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputPages">Pages</label>
+									<input type="text" th:field="*{pages}" 
+									class="form-control" id="inputPages"
+										placeholder="Pages">
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputPriceBuy">Price Buy</label> 
+									<input type="number" th:field="*{priceBuy}" 
+										class="form-control inputPriceBuy" id="inputPriceBuy" placeholder="Price Buy">
+								</div>
+								<div class="form-group col-md-6">
+									<label for="inputPriceSell">Price Sell</label>
+									<input type="number" th:field="*{priceSell}" 
+									class="form-control inputPriceSell" id="inputPriceSell"
+										placeholder="Price Sell">
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputQuantity">Quantity</label> 
+									<input type="number" th:field="*{quantity}" 
+										class="form-control" id="inputQuantity" placeholder="Quantity" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputImage">Images Product </label>
+								<input type="file" th:field="*{fileData}"  name="inputImage"
+									class="form-control-file" id="inputImage">
+							</div>
+							<label for="inputAuthors">Authors</label>
+							<a th:href="@{/admin/categories/addcategory/}"><button class="btn btn-outline-success btn-sm">+</button></a>
+							<div class="form-group" style = "height:100px;overflow-y:scroll;">
+								<div class="form-check" th:each="author : ${listAuthors}">
+									
+								  <input  class="form-check-input" type="checkbox" th:value="${author.id}" th:field="*{authors}">
+								  <label  class="form-check-label" th:for="${#ids.prev('authors')}" th:text="${author.name}">
+								  </label>
+								</div>
+							</div>
+							<label for="inputCategory">Category</label>
+							<a th:href="@{/admin/categories/addcategory/}"><button class="btn btn-outline-success btn-sm">+</button></a>
+							<div class="form-group">
+								<select th:field="*{category}" id="inputCategory" class="custom-select">
+								  <option value="-1">Open this select menu</option>
+								  <option th:each="type : ${listCategories}" 
+								          th:value="${type.id}" 
+								          th:text="${type.title}" value=""></option>
+								</select>
+								
+<!-- 								<div class="form-check">
+								  <input class="form-check-input" type="radio" th:field="*{category}" value="option1">
+								  <label class="form-check-label" th:for="${#ids.prev('category')}">
+								    Trinh Thám
+								  </label>
+								</div>
+								<div class="form-check">
+								  <input class="form-check-input" type="radio" th:field="*{category}" value="option2">
+								  <label class="form-check-label" th:for="${#ids.prev('category')}">
+								    Ngôn Tình
+								  </label>
+								</div> -->
+							</div>
+<!-- 							<div class="form-row">
+								<div class="form-group col-md-6">
+									<label for="inputCity">City</label> <input type="text"
+										class="form-control" id="inputCity">
+								</div>
+								<div class="form-group col-md-4">
+									<label for="inputState">State</label> <select id="inputState"
+										class="form-control">
+										<option selected>Choose...</option>
+										<option>...</option>
+									</select>
+								</div>
+								<div class="form-group col-md-2">
+									<label for="inputZip">Zip</label> <input type="text"
+										class="form-control" id="inputZip">
+								</div>
+							</div> -->
+							<button type="submit" class="btn btn-primary">Save</button>
+						</form>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+	<footer th:replace="admin/LayoutManage :: footer"></footer>
+	<script th:src="@{/js/general.js}"></script>
+	<script>
+		setPrice($('.inputPriceBuy'));
+		setPrice($('.inputPriceSell'));
+	</script>
+</body>
+</html>

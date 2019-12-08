@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<main class="mt-5 pt-4">
+	<div class="container">
+		<div class="row mt-5">
+			<table class="table table-bordered table-hover text-center">
+				<thead class="thead-dark">
+					<tr>
+						<th>#</th>
+						<th>Name of Book</th>
+						<th>Unit Price</th>
+						<th>Count</th>
+						<th>Total Price</th>
+					</tr>
+				</thead>
+				<tbody class="tableBody">
+					<tr th:each="i,state: ${list}">
+						<td th:utext="${state.count}"></td>
+						<td th:utext="${i.book.name}"></td>
+						<td th:utext="${#numbers.formatCurrency(i.unitPrice)}"></td>
+						<td th:utext="${i.quantity}"></td>
+						<td th:utext="@{${#numbers.formatCurrency(i.quantity*i.unitPrice)}}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="col-12 mt-5">
+				<h4 class="text-center mb-3">
+					Total: <span class="text-danger"
+						th:text="${#numbers.formatCurrency(totalPrice)}"></span>
+				</h4>
+				<div class="input-group col-lg-6 offset-lg-3">
+					<div class="input-group mb-3 input-group-sm">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Customer: </span>
+						</div>
+						<inputtype="text" class="form-control text-primary" readOnly
+							th:value="${customer}">
+
+					</div>
+
+					<div class="input-group mb-3 input-group-sm">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Phone: </span>
+						</div>
+						<input th:if="${status == 'resolved'}" type="text" class="form-control text-primary phone"
+							th:value="${phone}" readOnly>
+						<input th:unless="${status == 'resolved'}" type="text" class="form-control text-primary phone"
+							th:value="${phone}">
+					</div>
+
+				</div>
+				<div class="input-group col-lg-6 offset-lg-3">
+					<div class="input-group mb-3 input-group-sm">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Address:</span>
+						</div>
+						<input th:if="${status == 'resolved'}" type="text" class="form-control diachi" name="address"
+							th:value="${address}" readOnly>
+						<input th:unless="${status == 'resolved'}" type="text" class="form-control diachi" name="address"
+							th:value="${address}">
+					</div>
+				</div>
+				<input type="hidden" class="form-control idOrder" name="idOrder" th:value="${idOrder}">
+				<div th:if="${status == 'unresolved'}" class="col-12">
+					<a class=""><button class="col-6 offset-3 btn btn-success btn-updateOrder" type="button"> Update </button></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	</main>
+	<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head"></head>
+<style>
+.lg h1 {
+	text-align: center;
+}
+</style>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 offset-lg-3 lg">
+				<h1 class="text-primary">Login</h1>
+				<form th:action="@{/login}" method="post">
+					<div th:if="${param.error}">
+						<div class="alert alert-danger">Invalid Email or password.</div>
+					</div>
+					<div th:if="${param.logout}">
+						<div class="alert alert-info">You have been logged out.</div>
+					</div>
+					<div class="form-group">
+						<label for="username">Username</label>: <input type="text"
+							id="username" name="username" class="form-control"
+							autofocus="autofocus" placeholder="Username" />
+					</div>
+
+					<div class="form-group">
+						<label for="password">Password</label>: <input type="password"
+							id="password" name="password" class="form-control"
+							placeholder="Password" />
+					</div>
+					<div class="form-check">
+						<input type="checkbox" class="form-check-input" id="remember-me" name="remember-me"> 
+						<label class="form-check-label" for="remember-me">Remember me</label>
+						<!-- <label for="remember-me"><b>Rememeber Me</b></label>: <input type="checkbox"
+							id="remember-me" name="remember-me" class="form-check-input" /> -->
+					</div>
+					<div class="form-group mt-2">
+						<div class="row">
+							<div class="col-12">
+								<input type="submit" name="login-submit" id="login-submit"
+									class="form-control btn btn-primary" value="Log In" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<span>New user? <a href="/" th:href="@{/registration}">Register
+								here</a></span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

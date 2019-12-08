@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head"></head>
+<body>
+<nav th:replace="layout :: header"></nav>
+<main class="mt-5 pt-4">
+	<div class="container">
+		<div class="row">
+			<div id="demo" class="carousel slide col-12 mt-2 mb-2"
+				data-ride="carousel">
+				<!-- Indicators -->
+				<ul class="carousel-indicators">
+					<!-- <li data-target="#demo" data-slide-to="0" class="active"></li>
+					<li data-target="#demo" data-slide-to="1"></li>
+					<li data-target="#demo" data-slide-to="2"></li> -->
+					<li th:each="i, iState: ${numberCategory}" th:if="${iState.index == 0}" data-target="#demo" data-slide-to="${iState.index}" class="active"></li>
+					<li th:each="i, iState: ${numberCategory}" data-target="#demo" data-slide-to="${iState.index}" th:unless="${iState.index == 0}"></li>
+				</ul>
+
+				<!-- The slideshow -->
+				<div class="carousel-inner">
+					<div class="carousel-item active" th:each="category, state: ${listCategory}" th:if="${state.index == 0}">
+						<a href="#" th:href="@{/category/{id}(id=${category.id})}"><img th:src="${category.img}" th:alt="${category.title}" class="w-100"></a>
+					</div>
+					<div class="carousel-item" th:each="category, state: ${listCategory}" th:unless="${state.index == 0}">
+						<a href="#" th:href="@{/category/{id}(id=${category.id})}"><img th:src="${category.img}" th:alt="${category.title}" class="w-100"></a>
+					</div>
+				</div>
+
+				<!-- Left and right controls -->
+				<a class="carousel-control-prev" href="#demo" data-slide="prev">
+					<span class="carousel-control-prev-icon"></span>
+				</a> <a class="carousel-control-next" href="#demo" data-slide="next">
+					<span class="carousel-control-next-icon"></span>
+				</a>
+			</div>
+		</div>
+		<div class="row" th:each="category: ${listCategory}">
+			<div class="col-12 mt-4">
+				<hr style="border: 1px solid brown; width: 100%">
+				<p
+					style="font-size: 25px; color: darkred; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif" th:text="${category.title}">SÁCH
+					VĂN HỌC</p>
+			</div>
+			<div class="book-list__item col-lg-3 col-md-6 col-sm-6 col-xs-6"
+				th:if="${book.status == 'activated'}" th:each="book: ${category.books}">
+				<a href="#" th:href="@{/book/{id}(id=${book.id})}" class="view-book"></a>
+				<div class="item__wrap">
+					<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+						class="view-book"></a>
+					<div class="item__head">
+						<a href="#" class="view-book"> <!-- <div class="item__hot">Hot</div> -->
+							<div class="item__img text-center">
+								<a href="#" th:href="@{/book/{id}(id=${book.id})}"><img
+									th:src="${book.pathImages}"></a>
+							</div>
+						</a>
+						<div class="item__action">
+							<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+								class="view-book"> </a>
+							<div class="item__buy">
+								<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+									class="view-book"></a> <a href="#"
+									th:href="@{/book/{id}(id=${book.id})}" class="btn-add-to-cart"
+									data-url="/add-to-card/118" data-type="1"> Add to Cart <i
+									class="fa fa-shopping-cart"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="item__body">
+						<h3 class="item__title">
+							<a href="#" th:href="@{/book/{id}(id=${book.id})}"
+								class="view-book" th:text="${book.name}"></a>
+							<p class="view-book text-primary mt-2"
+								th:text="${#numbers.formatCurrency(book.priceSell)}">
+							</p>
+						</h3>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

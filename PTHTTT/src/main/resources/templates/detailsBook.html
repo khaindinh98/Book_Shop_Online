@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<main class="mt-5 pt-4">
+	<div class="container">
+		<div class="alert alert-success alert-dismissible center-block alert-addCart" style="visibility: hidden; ">
+			<button type="button" class="close" data-dismiss="alert">&times;</button>
+			<span>Add To Cart Successful</span>
+		</div>
+		<div class="detail__intro-content mt-5">
+			<div class="row" th:object="${book}">
+				<div class="col-lg-4 col-md-8 col-sm-12 detail__intro-img padding-right-0">
+					<div class="detail__intro-img-wrap text-center">
+						<img th:src="${book.pathImages}" th:alt="${book.name}">
+					</div>
+				</div>
+				<div class="col-lg-8 col-md-4 col-sm-12 padding-left-0">
+					<div class="detail__intro-infor">
+						<div class="detail__intro-detail">
+							<div class="row">
+								<div class="detail__intro-action col-md-6 col-12 full-xs">
+									<div
+										class="detail__intro-price-book font_secondary detail__price book__price">
+										<span class="font-primary font-size-18" th:text="${book.name}"></span>
+
+									</div>
+									<div class="detail__intro-author font_secondary">
+										<span class="font-primary font-weight-bold font-size-18">Author: <a
+											href="#" th:text="${author}"></a>
+										</span>
+									</div>
+
+									<div
+										class="detail__intro-price-book font_secondary detail__price book__price">
+										<span class="font-primary font-weight-bold font-size-18"
+										>Price: </span><span class="font-primary font-weight-bold font-size-18"
+											th:text="${#numbers.formatCurrency(book.priceSell)}"></span>
+
+									</div>
+									<div
+										class="detail__intro-price-book font_secondary detail__price book__price">
+										<span class="font-primary font-size-18"
+											th:text="${book.category}"></span>
+
+									</div>					
+									<div th:if="${book.status == 'activated'}" class="detail__intro-form">
+										<form action="/addToCart" method="post">
+											<div class="form-action">
+												<input type="hidden" th:value="${book.id}" id="idBook">
+												<button class="btn btn-primary addCart" type="button"> <i class="fa fa-shopping-cart"
+													aria-hidden="true"></i> Add to Cart</button>
+											</div>
+											<div class="center pt-5">
+													<div class="input-group text-center">
+														<span class="input-group-btn">
+															<button type="button" class="btn btn-danger btn-number"
+																data-type="minus" data-field="quant[2]">
+																<span class="">-</span>
+															</button>
+														</span> <input type="text" name="quant[2]"
+															class="form-control input-number text-center" value="1" min="1"
+															max="100"> <span class="input-group-btn">
+															<button type="button" class="btn btn-success btn-number"
+																data-type="plus" data-field="quant[2]">
+																<span class="">+</span>
+															</button>
+														</span>
+													</div>
+													<p></p>
+												</div>
+										</form>
+									</div>
+								</div>
+								<div class="detail__intro-support col-md-6 col-12 full-xs">
+									<table class="table table-bordered">
+										<tbody>
+											<tr th:if="${book.status == 'unactivated'}">
+												<th>Status</th>
+												<td>Stop Selling</td>
+											</tr>
+											<tr>
+												<th>Width</th>
+												<td th:text="${book.size}"></td>
+											</tr>
+											<tr>
+												<th>Number of pages</th>
+												<td th:text="${book.pages}"></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="detail__description-book col-12 mt-5">
+					<div class="tab-content">
+						<div class="tab-mobile__title active hidden-lg hidden-md">
+							<a data-toggle="pill" href="#description"
+								style="background: #2F4F4F; color: white"> Description <span
+								class="pull-right"></span></a>
+						</div>
+						<div id="description"
+							class="active secondary_color_text p-3 text-justify"
+							th:text="${book.description}" style="box-sizing: border-box; margin: 5px 0px 12px; color: rgb(36, 36, 36); font-family: Roboto, Helvetica, Arial, sans-serif; font-size: 18px; text-align: justify;">dsadsada</div>
+					</div>
+			</div>
+			<!-- <div class="col-12 mt-4">
+				<hr style="border: 1px solid brown; width: 100%">
+				<p
+					style="font-size: 25px; color: darkred; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif"></p>
+			</div> -->
+			<!-- <div class="book-list__item col-lg-3 col-md-6 col-sm-6 col-xs-6"
+				>
+				<a href="#"  class="view-book"></a>
+				<div class="item__wrap">
+					<a href="#" 
+						class="view-book"></a>
+					<div class="item__head">
+						<a href="#" class="view-book"> <div class="item__hot">Hot</div>
+							<div class="item__img text-center">
+								<a href="#" ><img
+									src="/images/toithayhoavang.jpg"></a>
+							</div>
+						</a>
+						<div class="item__action">
+							<a href="#" 
+								class="view-book"> </a>
+							<div class="item__buy">
+								<a href="#"
+									class="view-book"></a> <a href="#"
+									class="btn-add-to-cart"
+									data-url="/add-to-card/118" data-type="1"> Add to Cart <i
+									class="fa fa-shopping-cart"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="item__body">
+						<h3 class="item__title">
+							<a href="#"
+								class="view-book"></a>
+							<p class="view-book text-primary mt-2">
+							</p>
+						</h3>
+					</div>
+
+				</div>
+			</div> -->
+		</div>
+	</div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>

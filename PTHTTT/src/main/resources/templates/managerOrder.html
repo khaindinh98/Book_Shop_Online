@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head th:replace="layout :: head"></head>
+<body>
+	<nav th:replace="layout :: header"></nav>
+	<main class="mt-5 pt-4">
+	<div class="container">
+		<div class="row">
+			<div class="table-responsive mt-5">
+					<hr style="border: 1px solid brown; width: 100%">
+					<!-- <h5>My Order</h5> -->
+					<p
+					style="font-size: 25px; color: darkred; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif">My Order</p>
+					<table class="table table-bordered table-hover text-center mt-4">
+						<thead class="thead-dark">
+							<tr>
+								<th>#</th>
+								<th>Address</th>
+								<th>Status</th>
+								<th>Total Price</th>
+								<th>DateTime</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="order,iterStat : ${listOrder}">
+								<th scope="row" th:text="${iterStat.count}"></th>
+								<td th:text="${order.addressDetails}"></td>
+								<td th:text="${order.statusOrder}"></td>
+								
+								<td th:text="${order.totalPrice}"></td>
+								<td th:text="${order.dateOrder}"></td>
+								<td th:if="${order.statusOrder == 'unresolved'}">
+									<a href="#" th:href="@{/order/viewDetails/{id}(id=${order.id})}" class="mr-sm-2 text-primary">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</a> 
+									<a href="#" th:href="@{/order/edit/{id}/(id=${order.id})}" class="mr-sm-2 text-primary">
+										<i class="fa fa-pencil"></i>
+									</a> 
+									<a href="#" th:href="@{/order/remove/{id}(id=${order.id})}" class="text-danger">
+										<i class="fa fa-trash"></i>
+									</a>
+								</td>
+								<td th:unless="${order.statusOrder == 'unresolved'}">
+									<a href="#" th:href="@{/order/viewDetails/{id}(id=${order.id})}" class="mr-sm-2 text-primary">
+										<i class="fa fa-eye" aria-hidden="true"></i>
+									</a> 
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+		</div>
+	</div>
+</main>
+<footer th:replace="layout :: footer"></footer>
+</body>
+</html>
