@@ -37,19 +37,19 @@ public class StatisticRest {
 					this.totalOfProductBought += 1;
 				statisProductRest
 						.setNumOfItemBought(statisProductRest.getNumOfItemBought() + detailInvoice.getQuantity());
-				statisProductRest.setEarningsByBook(statisProductRest.getEarningsByBook()
-						- (detailInvoice.getQuantity() * detailInvoice.getPriceBuy()));
+//				statisProductRest.setEarningsByBook(statisProductRest.getEarningsByBook()
+//						- (detailInvoice.getQuantity() * detailInvoice.getPriceBuy()));
 				this.totalOfItemBought += detailInvoice.getQuantity();
-				this.earnings -= detailInvoice.getQuantity() * detailInvoice.getPriceBuy();
+//				this.earnings -= detailInvoice.getQuantity() * detailInvoice.getPriceBuy();
 				return;
 			}
 		}
 		statisProductRests.add(new StatisticProductRest(detailInvoice.getBook().getName(), detailInvoice.getQuantity(),
-				0, -(detailInvoice.getQuantity() * detailInvoice.getPriceBuy()), detailInvoice.getBook().getPriceBuy(),
+				0, 0, detailInvoice.getBook().getPriceBuy(),
 				detailInvoice.getBook().getPriceSell(), detailInvoice.getBook().getQuantity()));
 		this.totalOfItemBought += detailInvoice.getQuantity();
 		this.totalOfProductBought += 1;
-		this.earnings -= detailInvoice.getQuantity() * detailInvoice.getPriceBuy();
+//		this.earnings -= detailInvoice.getQuantity() * detailInvoice.getPriceBuy();
 	}
 
 	public void addDetailOrder(DetailOrder detailOrder) {
@@ -60,18 +60,18 @@ public class StatisticRest {
 					this.totalOfProductSold += 1;
 				statisProductRest.setNumOfItemSold(statisProductRest.getNumOfItemSold() + detailOrder.getQuantity());
 				statisProductRest.setEarningsByBook(statisProductRest.getEarningsByBook()
-						+ (detailOrder.getQuantity() * detailOrder.getUnitPrice()));
+						+ (detailOrder.getQuantity() * (detailOrder.getUnitPrice()-detailOrder.getBook().getPriceBuy())));
 				this.totalOfItemSold += detailOrder.getQuantity();
-				this.earnings += detailOrder.getQuantity() * detailOrder.getUnitPrice();
+				this.earnings += detailOrder.getQuantity() * (detailOrder.getUnitPrice()-detailOrder.getBook().getPriceBuy());
 				return;
 			}
 		}
 		statisProductRests.add(new StatisticProductRest(detailOrder.getBook().getName(), 0, detailOrder.getQuantity(),
-				(detailOrder.getQuantity() * detailOrder.getUnitPrice()), detailOrder.getBook().getPriceBuy(),
+				(detailOrder.getQuantity() * (detailOrder.getUnitPrice()-detailOrder.getBook().getPriceBuy())), detailOrder.getBook().getPriceBuy(),
 				detailOrder.getBook().getPriceSell(), detailOrder.getBook().getQuantity()));
 		this.totalOfItemSold += detailOrder.getQuantity();
 		this.totalOfProductSold += 1;
-		this.earnings += detailOrder.getQuantity() * detailOrder.getUnitPrice();
+		this.earnings += detailOrder.getQuantity() * (detailOrder.getUnitPrice()-detailOrder.getBook().getPriceBuy());
 	}
 
 }

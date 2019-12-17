@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class StatisticServiceImpl implements StatisticService{
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Deprecated
 	private int statisticEarningsByInvoicesTime(LocalDateTime start, LocalDateTime end) {
 		int totalPriceByDate = 0;
 		List<Invoice> invoices = invoiceRepository.findByDateModifiedBetween(start, end);		
@@ -29,7 +31,7 @@ public class StatisticServiceImpl implements StatisticService{
 			totalPriceByDate+=invoice.getTotalPrice();
 		return totalPriceByDate;
 	}
-	
+	@Deprecated
 	private int statisticEarningsByOrdersTime(LocalDateTime start, LocalDateTime end) {
 		int totalPriceByDate = 0;
 		List<Order> orders = orderRepository.findByDateOrderBetween(start, end);		
@@ -38,9 +40,19 @@ public class StatisticServiceImpl implements StatisticService{
 		return totalPriceByDate;
 	}
 	
+	private int statisticEarningsTime(LocalDateTime start, LocalDateTime end) {
+		int totalPriceByTime = 0;
+		List<Order> orders = orderRepository.findByDateOrderBetween(start, end);		
+		for(Order order : orders) {
+			totalPriceByTime+=order.getTotalPrice();
+			for(DetailOrder detailOrder : order.getDetailOrders())
+				totalPriceByTime-=detailOrder.getBook().getPriceBuy()*detailOrder.getQuantity();
+		}
+		return totalPriceByTime;
+	}
 	
 	private int statisticEarningsByTime(LocalDateTime start, LocalDateTime end) {
-		return statisticEarningsByOrdersTime(start, end) - statisticEarningsByInvoicesTime(start, end);
+		return statisticEarningsTime(start, end);
 	}
 	
 	
@@ -68,8 +80,10 @@ public class StatisticServiceImpl implements StatisticService{
 		}
 		List<Order> orders = orderRepository.findByDateOrderBetween(start, end);
 		for(Order order : orders) {
-			for(DetailOrder detailOrder: order.getDetailOrders()) {
-				statisticRest.addDetailOrder(detailOrder);
+			if(order.getStatusOrder().equals("resolved")) {
+				for(DetailOrder detailOrder: order.getDetailOrders()) {
+					statisticRest.addDetailOrder(detailOrder);
+				}
 			}
 		}
 		
@@ -102,5 +116,19 @@ public class StatisticServiceImpl implements StatisticService{
 		LocalDateTime start = LocalDateTime.of(now.getYear(), 1, 1,0,0);
 		return statisticByTime(start, start.plusYears(1));
 	}
+
+	@Override
+	public StatisticRest statisticByDate(LocalDateTime start) {
+		return statisticByTime(start, start.plusDays(1));
+	}
 	
+	@Override
+	public StatisticRest statisticByMonth(LocalDateTime start) {
+		return statisticByTime(start, start.plusMonths(1));
+	}
+	
+	@Override
+	public StatisticRest statisticByYear(LocalDateTime start) {
+		return statisticByTime(start, start.plusYears(1));
+	}
 }

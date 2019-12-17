@@ -33,7 +33,9 @@ public class OrdersController {
 	
 	@RequestMapping(value = "/detailorder/{id}", method = RequestMethod.GET)
 	public String addCategory(@PathVariable("id") Integer id, Model model) {
-		model.addAttribute("order", orderService.getOrderById(id));
+		Order order = orderService.getOrderById(id);
+		model.addAttribute("order", order);
+		model.addAttribute("status", order.getStatusOrder());
 		return "admin/Order";
 	}
 //	

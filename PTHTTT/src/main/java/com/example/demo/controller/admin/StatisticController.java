@@ -1,5 +1,6 @@
 package com.example.demo.controller.admin;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,4 +56,22 @@ public class StatisticController {
 		return statisticService.statisticThisYear();
 	}
 	
+	@RequestMapping(value = "/bydate/{date}", method = RequestMethod.GET)
+	@ResponseBody
+	public StatisticRest statisticByDate(@PathVariable("date") String tmpDate, Model model) {
+		String[] date = tmpDate.split("-");
+		return statisticService.statisticByDate(LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), Integer.parseInt(date[2]), 0, 0, 0));
+	}
+	@RequestMapping(value = "/bymonth/{date}", method = RequestMethod.GET)
+	@ResponseBody
+	public StatisticRest statisticByMonth(@PathVariable("date") String tmpDate, Model model) {
+		String[] date = tmpDate.split("-");
+		return statisticService.statisticByMonth(LocalDateTime.of(Integer.parseInt(date[0]), Integer.parseInt(date[1]), 1, 0, 0, 0));
+	}
+	@RequestMapping(value = "/byyear/{date}", method = RequestMethod.GET)
+	@ResponseBody
+	public StatisticRest statisticByYear(@PathVariable("date") String tmpDate, Model model) {
+		String[] date = tmpDate.split("-");
+		return statisticService.statisticByYear(LocalDateTime.of(Integer.parseInt(date[0]), 1, 1, 0, 0, 0));
+	}
 }

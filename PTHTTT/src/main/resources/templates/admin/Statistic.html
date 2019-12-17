@@ -36,7 +36,30 @@
 									Month</button>
 								<button class="dropdown-item" onclick="getData('this year')">This
 									Year</button>
+								<button class="dropdown-item" onclick="setAdvanced()">Advanced</button>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row" id="avanced">
+					<div class="col-8">
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<input type="radio" value="bydate" name="typeRadio"
+										id="typeRadio" checked>By Date
+								</div>
+								<div class="input-group-text">
+									<input type="radio" value="bymonth" name="typeRadio"
+										id="typeRadio">By Month
+								</div>
+								<div class="input-group-text">
+									<input type="radio" value="byyear" name="typeRadio"
+										id="typeRadio">By Year
+								</div>
+							</div>
+							<input type="date" class="form-control" id="inputDate">
+							<button class="btn btn-outline-secondary" onclick="getDataAdvanced()" type="button">Statistic</button>
 						</div>
 					</div>
 				</div>

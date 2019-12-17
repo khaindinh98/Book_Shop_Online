@@ -65,7 +65,8 @@
 									</tbody>
 								</table>
 							</div>
-							<a th:href="@{/admin/order/check/{id}(id=${order.id})}"><button  type="button" class="btn btn-primary">Duyệt</button></a>
+							<a th:if="${status == 'unresolved'}" th:href="@{/admin/order/check/{id}(id=${order.id})}"><button  type="button" class="btn btn-primary">Duyệt</button></a>
+							<a th:if="${status == 'resolved'}" href=""><button  type="button" class="btn btn-success">Đã Duyệt</button></a>
 						</form>
 					</div>
 				</div>

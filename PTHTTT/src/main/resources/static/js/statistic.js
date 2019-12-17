@@ -25,7 +25,6 @@ function setData(result, type){
 }
 
 function getData(type){
-	
 	$.ajax({
 		url : "/admin/statistic/"+type.replace(/\s+/g, ''),
 		type : 'GET',
@@ -35,11 +34,31 @@ function getData(type){
 	});
 }
 
+function getDataAdvanced(){
+	date = $("#inputDate").val();
+	type = $("input[name='typeRadio']:checked").val();
+	if(date !=''){
+		$.ajax({
+			url : "/admin/statistic/"+type+"/"+date.replace(/\s+/g, ''),
+			type : 'GET',
+			success : function(result){
+				setData(result, date);
+			}
+		});
+	}
+	else{
+		alert("Date is Empty");
+		$("#inputDate").focus();
+	}
+}
+
 $("document").ready(function() {
-	
+	let date = new Date();
+	let strDate = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+	$("#inputDate").val(strDate);
 	getData("this date");
 	$(".imgProduct").hover(function() {
-		$(this).css("transform", "scale(1.05");
+		$(this).css("transform", "scale(1.05)");
 		var a = $(".nameBook");
 		$(this).parent().find(a).css("color", "red");
 
